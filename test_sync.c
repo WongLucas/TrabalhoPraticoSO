@@ -6,6 +6,7 @@
 
 int buffer[BUFFER_SIZE];
 int in = 0, out = 0;
+int counter = 0; // Contador global para garantir valores únicos
 
 semaphore_t empty_slots;
 semaphore_t full_slots;
@@ -16,8 +17,8 @@ void* producer(void* arg) {
         sem_wait(&empty_slots);
         pthread_mutex_lock(&buffer_lock);
 
-        buffer[in] = i;
-        printf("Produced: %d\n", i);
+        buffer[in] = counter++;
+        printf("Produced: %d\n", buffer[in]);
         in = (in + 1) % BUFFER_SIZE;
 
         pthread_mutex_unlock(&buffer_lock);
