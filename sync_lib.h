@@ -3,14 +3,14 @@
 
 #include <pthread.h>
 
-// Definição da estrutura do semáforo
+// Estrutura do semáforo
 typedef struct {
-    int value;                 // Contador do semáforo
-    pthread_mutex_t lock;      // Mutex para proteger o semáforo
-    pthread_cond_t cond;       // Variável de condição para sincronização
+    int value;
+    pthread_mutex_t lock;
+    pthread_cond_t cond;
 } semaphore_t;
 
-// Declarações das funções
+// Funções do semáforo
 void sem_init(semaphore_t *sem, int value);
 void sem_wait(semaphore_t *sem);
 void sem_post(semaphore_t *sem);
