@@ -5,7 +5,7 @@
 #include <time.h>
 #include "sync_lib.h"
 
-#define BUFFER_SIZE 100
+#define BUFFER_SIZE 20
 
 int buffer[BUFFER_SIZE];
 int count = 0;
@@ -15,7 +15,7 @@ semaphore_t full_slots;  // Semáforo para slots preenchidos
 pthread_mutex_t buffer_lock; // Mutex para proteger o buffer
 
 void *producer(void *arg) {
-    for (int i = 0; i < 1000; i++) { // Produz 20 itens
+    for (int i = 0; i < 10000; i++) {
         sem_wait(&empty_slots); // Aguarda espaço no buffer
         pthread_mutex_lock(&buffer_lock); // Bloqueia o acesso ao buffer
 
@@ -30,7 +30,7 @@ void *producer(void *arg) {
 }
 
 void *consumer(void *arg) {
-    for (int i = 0; i < 1000; i++) { // Consome 20 itens
+    for (int i = 0; i < 10000; i++) {
         sem_wait(&full_slots); // Aguarda itens no buffer
         pthread_mutex_lock(&buffer_lock); // Bloqueia o acesso ao buffer
 
@@ -67,8 +67,8 @@ void produtor_consumidor(){
     clock_t end_time = clock();
 
     // Calcula o tempo de execução
-    double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("Elapsed time: %.10f seconds\n", elapsed_time);
+    double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC * 1000;
+    printf("Elapsed time: %.2f miliseconds\n", elapsed_time);
 
 }
 
